@@ -1,13 +1,14 @@
+/* eslint-disable */
 <template>
   <div class="tasks">
     <div
-      @dblclick="togglereminder(items.id)"
+      @dblclick="togglereminder(items.taskid)"
       v-for="items in tasks"
-      :key="items.id"
-      :class="[items.reminder ? 'task-reminder' : 'task', 'task']"
+      :key="items.taskid"
+      :class="[items.reminder ? 'taskreminder' : 'task', 'task']"
     >
-      <div class="taskheading">{{ items.task }}</div>
-      <div class="taskbody">{{ items.body }}</div>
+      <div class="taskheading">{{ items.taskhead }}</div>
+      <div class="taskbody">{{ items.taskbody }}</div>
     </div>
   </div>
 </template>
@@ -17,64 +18,25 @@ export default {
   name: "Tasks",
   data() {
     return {
-      tasks: [
-        {
-          id: 1,
-          task: "Task 1",
-          body: "Appoitment with Doctor",
-          reminder: true,
-        },
-        {
-          id: 2,
-          task: "Task 2",
-          body: "Appoitment with Doctor",
-          reminder: true,
-        },
-        {
-          id: 3,
-          task: "Task 3",
-          body: "Appoitment with Doctor",
-          reminder: true,
-        },
-        {
-          id: 4,
-          task: "Task 4",
-          body: "Appoitment with Doctor",
-          reminder: false,
-        },
-        {
-          id: 5,
-          task: "Task 5",
-          body: "Appoitment with Doctor",
-          reminder: true,
-        },
-        {
-          id: 6,
-          task: "Task 6",
-          body: "Appoitment with Doctor",
-          reminder: false,
-        },
-        {
-          id: 7,
-          task: "Task 7",
-          body: "Appoitment with Doctor",
-          reminder: true,
-        },
-        {
-          id: 8,
-          task: "Task 8",
-          body: "Appoitment with Doctor",
-          reminder: true,
-        },
-      ],
+      tasks: [],
     };
   },
+
   methods: {
     togglereminder(id) {
       this.tasks = this.tasks.map((tasks) =>
         tasks.id === id ? { ...tasks, reminder: !tasks.reminder } : tasks
       );
     },
+    async fetchtasks() {
+      const res = await fetch("/api/tasklist");
+      const data = await res.json();
+      console.log(data[0]);
+      return data;
+    },
+  },
+  created() {
+    this.tasks = this.fetchtasks();
   },
 };
 </script>
