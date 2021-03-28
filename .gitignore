@@ -6,7 +6,7 @@ node_modules
 /todoapi/todoapi/settings.py
 /todoapi/*/*/*.pyc
 /todoapi/db.sqlite3
-todopyenv
+todopyenv/
 
 # local env files
 .env.local
