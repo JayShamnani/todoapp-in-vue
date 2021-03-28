@@ -1,10 +1,10 @@
 <template>
   <div>
-	<Header />
-	<div>
-		<Tasks />
-	</div>
-	<Footer />
+    <Header />
+    <div>
+      <Tasks />
+    </div>
+    <Footer />
   </div>
 </template>
 
@@ -16,9 +16,9 @@ import Tasks from "../components/Tasks";
 export default {
   name: "Home",
   components: {
-	Header,
-	Footer,
-	Tasks
+    Header,
+    Footer,
+    Tasks,
   },
 };
 </script>

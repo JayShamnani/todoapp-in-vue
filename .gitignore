@@ -2,6 +2,11 @@
 node_modules
 /dist
 
+# Django Files
+/todoapi/todoapi/settings.py
+/todoapi/*/*/*.pyc
+/todoapi/db.sqlite3
+todopyenv
 
 # local env files
 .env.local
