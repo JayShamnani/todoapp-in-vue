@@ -40,7 +40,7 @@ export default {
 }
 
 .buttons {
-  width: 50%;
+  width: 60%;
   display: flex;
   justify-content: space-around;
 }

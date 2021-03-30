@@ -26,6 +26,7 @@ export default {
   width: 100%;
   background-color: #1f1b24;
   color: #ffffff;
+  font-size: auto;
 }
 
 .footerelements {
