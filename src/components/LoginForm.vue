@@ -50,13 +50,14 @@ export default {
 
 <style scoped>
 .container label {
-  text-align: center;
+  text-align: right;
   color: #fff;
 }
 .container {
   padding-top: 70px;
 }
 .buttons {
+  margin-top: 5px;
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -64,5 +65,20 @@ export default {
 
 input {
   background-color: #3c403c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  /* padding: 3px; */
+}
+
+input[type="text"] {
+  padding: 5px 10px;
+}
+input[type="email"] {
+  padding: 5px 10px;
+}
+input[type="password"] {
+  padding: 5px 10px;
 }
 </style>

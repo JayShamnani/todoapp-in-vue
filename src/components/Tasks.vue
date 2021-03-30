@@ -3,17 +3,20 @@
   <div class="tasks">
     <div
       @dblclick="togglereminder(items.taskid)"
-      v-for="items in tasks"
-      :key="items.taskid"
+      v-for="items in Taskstore"
+      :key="items.id"
       :class="[items.reminder ? 'taskreminder' : 'task', 'task']"
     >
       <div class="taskheading">{{ items.taskhead }}</div>
       <div class="taskbody">{{ items.taskbody }}</div>
+      <div class="taskauthor">{{ items.taskauthor }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Tasks",
   data() {
@@ -22,21 +25,18 @@ export default {
     };
   },
 
+  computed: mapGetters(["Taskstore"]),
+
   methods: {
+    ...mapActions(["fetchtasks"]),
     togglereminder(id) {
       this.tasks = this.tasks.map((tasks) =>
         tasks.id === id ? { ...tasks, reminder: !tasks.reminder } : tasks
       );
     },
-    async fetchtasks() {
-      const res = await fetch("/api/tasklist");
-      const data = await res.json();
-      console.log(data[0]);
-      return data;
-    },
   },
   created() {
-    this.tasks = this.fetchtasks();
+    this.fetchtasks();
   },
 };
 </script>
