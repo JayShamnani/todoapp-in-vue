@@ -50,7 +50,11 @@ export default {
         taskauthor: 3,
       };
 
+      this.$emit("addTask", newTask);
       this.addTask(newTask);
+      this.head = "";
+      this.body = "";
+      this.reminder = false;
     },
   },
 };

@@ -1,4 +1,3 @@
-/* eslint-disable */
 <template>
   <div class="tasks">
     <div
@@ -12,13 +11,18 @@
       <div class="taskauthor">{{ items.taskauthor }}</div>
     </div>
   </div>
+  <addTask @addTask="addTask" />
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import addTask from "../components/addTask";
 
 export default {
   name: "Tasks",
+  components: {
+    addTask,
+  },
   data() {
     return {
       tasks: [],
@@ -33,6 +37,9 @@ export default {
       this.tasks = this.tasks.map((tasks) =>
         tasks.id === id ? { ...tasks, reminder: !tasks.reminder } : tasks
       );
+    },
+    addTask(newTask) {
+      this.Taskstore.push(newTask);
     },
   },
   created() {
