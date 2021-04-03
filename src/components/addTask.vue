@@ -1,7 +1,7 @@
 <template>
   <div class="addTaskContainer">
     <div class="addTask">
-      <form class="addForm">
+      <form @submit="onSubmit" class="addForm">
         <div class="col-sm-12">
           <label class="col-4">Heading</label>
           <input class="col-7" type="text" v-model="head" name="head" />
@@ -14,15 +14,17 @@
           <label class="col-4">Reminder</label>
           <input type="checkbox" v-model="reminder" name="reminder" />
         </div>
+        <div class="addtaskBtn">
+          <button type="submit" class="btn btn-success">Add Task</button>
+        </div>
       </form>
-      <div class="addtaskBtn">
-        <button class="btn btn-success">Add Task</button>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "addTask",
   data() {
@@ -31,6 +33,25 @@ export default {
       body: "",
       reminder: false,
     };
+  },
+  methods: {
+    ...mapActions(["addTask"]),
+    onSubmit(e) {
+      e.preventDefault();
+
+      if (!this.head) {
+        alert("Please Enter Heading for Task");
+      }
+
+      const newTask = {
+        taskhead: this.head,
+        taskbody: this.body,
+        taskreminder: this.reminder,
+        taskauthor: 3,
+      };
+
+      this.addTask(newTask);
+    },
   },
 };
 </script>
@@ -53,13 +74,13 @@ export default {
 }
 
 .addtaskBtn {
+  display: block;
   padding: 5px;
 }
 
 .addForm {
   width: 100%;
   display: block;
-  /* flex-direction: column; */
   padding: 5px;
 }
 form label {
