@@ -8,21 +8,18 @@
           type="text"
           name="Username"
           placeholder="Username"
+          v-model="Username"
         />
       </div>
 
       <div class="col-sm-10">
         <label class="col-4">Name</label>
-        <input class="col-7" type="text" name="Name" placeholder="Tony Stark" />
-      </div>
-
-      <div class="col-sm-10">
-        <label class="col-4">Email</label>
         <input
           class="col-7"
-          type="email"
-          name="Username"
-          placeholder="me@example.com"
+          v-model="Name"
+          type="text"
+          name="Name"
+          placeholder="Tony Stark"
         />
       </div>
 
@@ -30,17 +27,23 @@
         <label class="col-4">Password</label>
         <input
           class="col-7"
+          v-model="Password"
           type="password"
           name="Password"
           placeholder="password"
         />
+        <p style="color: #fff">One lowercase and uppercase letters required</p>
+        <p style="color: #fff">8 characters minimum</p>
+        <p style="color: #fff">One number and special character required</p>
       </div>
       <div class="col-sm-10 align-items-center loginbtn">
         <label>Already a Member ?</label>
         <router-link to="/login" class="btn btn-light">Login</router-link>
       </div>
       <div class="buttons col-sm-6">
-        <button type="button" class="btn btn-success">Submit</button>
+        <button type="button" @click="onSubmit()" class="btn btn-success">
+          Submit
+        </button>
       </div>
     </div>
   </div>
@@ -49,6 +52,42 @@
 <script>
 export default {
   name: "LoginForm",
+  data() {
+    return {
+      Username: "",
+      Name: "",
+      Password: "",
+    };
+  },
+  methods: {
+    onSubmit() {
+      const username = this.Username;
+      const password = this.Password;
+      if (username.match(/^[A-Za-z0-9_@.-]*$/)) {
+        if (
+          password.match(
+            /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,36}$/
+          )
+        ) {
+          const UserProfile = {
+            id: this.Username,
+            name: this.Name,
+            password: this.Password,
+          };
+          console.log(UserProfile);
+        } else {
+          alert("Password doesn't meet requirement");
+        }
+      } else {
+        alert(
+          this.Username +
+            String(
+              " is not allowed, only alphanumeric character with @._- are allowed"
+            )
+        );
+      }
+    },
+  },
 };
 </script>
 
@@ -59,6 +98,7 @@ export default {
 }
 .container {
   padding-top: 70px;
+  padding-bottom: 50px;
 }
 .buttons {
   margin-top: 5px;
