@@ -3,12 +3,19 @@
     <div
       v-for="items in Taskstore"
       :key="items.taskid"
-      :class="[items.taskreminder ? 'task-reminder' : 'task', 'task']"
       @dblclick="togglereminder(items)"
+      :class="[
+        items.tasknull
+          ? 'task-null'
+          : [items.taskreminder ? 'task-reminder' :none, 'task'],
+      ]"
     >
       <div class="taskheading">{{ items.taskhead }}</div>
       <div class="taskbody">{{ items.taskbody }}</div>
-      <div class="taskauthor">{{ items.taskauthor }}</div>
+      <div class="delete">
+        <div class="taskauthor">{{ items.taskauthor }}</div>
+        <i @click="deletetask(items)" class="far fa-trash-alt"></i>
+      </div>
     </div>
   </div>
   <addTask @addTask="addTask" />
@@ -39,6 +46,14 @@ export default {
     addTask(newTask) {
       this.Taskstore.push(newTask);
     },
+    deletetask(id) {
+      // Object.keys(id).forEach(function (key) {
+      //   if (id[key] !== null) {
+      //     delete id[key];
+      //   }
+      // });
+      id.tasknull = true;
+    },
   },
   created() {
     this.fetchtasks();
@@ -47,6 +62,17 @@ export default {
 </script>
 
 <style scoped>
+.delete {
+  display: flex;
+  justify-content: space-between;
+}
+.delete i {
+  cursor: pointer;
+}
+.task-null {
+  display: none;
+  transition: 3s ease;
+}
 .tasks {
   text-align: left;
   color: #ffffff;
@@ -64,12 +90,13 @@ export default {
   padding: 8px 20px;
   min-height: 50px;
   border-radius: 8px;
-  cursor: pointer;
   user-select: none;
   border-left: solid 10px rgba(0, 0, 0, 0);
+  transition: 0.3s ease;
 }
 .task-reminder {
   border-left: solid 10px green;
+  transition: 0.3s ease;
 }
 .taskheading {
   font-size: 30px;

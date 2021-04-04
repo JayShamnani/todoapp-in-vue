@@ -66,12 +66,15 @@ export default {
   display: flex;
   justify-content: space-around;
   color: #fff;
+  transition: 0.3s ease;
+  transform: inherit;
 }
 .addTask {
   width: 80%;
   background: #121212;
   border-radius: 10px;
   padding-top: 5px;
+
 }
 
 .addtaskBtn {

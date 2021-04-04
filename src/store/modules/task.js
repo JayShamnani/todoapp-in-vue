@@ -25,6 +25,12 @@ const actions = {
 
     commit("addTask", jsonres);
   },
+
+  async toggleReminder(taskreminder) {
+    const id = taskreminder.id;
+    const res = await fetch(`/api/taskupdate/{}`);
+    console.log(res, id);
+  },
 };
 const mutations = {
   fetchtasks: (state, tasks) => (state.taskstate = tasks),
