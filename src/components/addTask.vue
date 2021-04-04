@@ -70,16 +70,15 @@ export default {
 .addTask {
   width: 80%;
   background: #121212;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   border-radius: 10px;
   padding-top: 5px;
 }
 
 .addtaskBtn {
-  display: block;
+  display: flex;
+  width: 100%;
   padding: 5px;
+  justify-content: center;
 }
 
 .addForm {

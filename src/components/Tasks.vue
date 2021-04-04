@@ -1,10 +1,10 @@
 <template>
   <div class="tasks">
     <div
-      @dblclick="togglereminder(items.taskid)"
       v-for="items in Taskstore"
-      :key="items.id"
-      :class="[items.reminder ? 'taskreminder' : 'task', 'task']"
+      :key="items.taskid"
+      :class="[items.taskreminder ? 'task-reminder' : 'task', 'task']"
+      @dblclick="togglereminder(items)"
     >
       <div class="taskheading">{{ items.taskhead }}</div>
       <div class="taskbody">{{ items.taskbody }}</div>
@@ -34,9 +34,7 @@ export default {
   methods: {
     ...mapActions(["fetchtasks"]),
     togglereminder(id) {
-      this.tasks = this.tasks.map((tasks) =>
-        tasks.id === id ? { ...tasks, reminder: !tasks.reminder } : tasks
-      );
+      id.taskreminder = !id.taskreminder;
     },
     addTask(newTask) {
       this.Taskstore.push(newTask);
