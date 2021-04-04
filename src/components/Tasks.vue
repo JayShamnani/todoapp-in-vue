@@ -39,7 +39,7 @@ export default {
   computed: mapGetters(["Taskstore"]),
 
   methods: {
-    ...mapActions(["fetchtasks", "toggleReminder"]),
+    ...mapActions(["fetchtasks", "toggleReminder", "deleteTask"]),
     togglereminder(id) {
       id.taskreminder = !id.taskreminder;
       const updatedTask = {
@@ -56,6 +56,14 @@ export default {
     },
     deletetask(id) {
       id.tasknull = true;
+      const updatedTask = {
+        taskid: id.taskid,
+        taskhead: id.taskhead,
+        taskbody: id.taskbody,
+        taskreminder: id.taskreminder,
+        taskauthor: id.taskauthor,
+      };
+      this.deleteTask(updatedTask);
     },
   },
   created() {

@@ -37,11 +37,22 @@ const actions = {
     const jsonres = await res.json();
     commit("toggleReminder", jsonres);
   },
+  async deleteTask({ commit }, Task) {
+    const res = await fetch(`/api/taskdelete/${Task.taskid}`, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    const jsonres = await res.json();
+    commit("deleteTask", jsonres);
+  },
 };
 const mutations = {
   fetchtasks: (state, tasks) => (state.taskstate = tasks),
   addTask: (state, task) => state.newtask.unshift(task),
-  toggleReminder: (state, task) => state.newtask.unshift(task),
+  toggleReminder: (state) => state,
+  deleteTask: (state) => state,
 };
 export default {
   state,
