@@ -66,7 +66,7 @@ class tasklist(APIView):
 
 
 class taskUpdate(APIView):
-    def update(self,request,id):
+    def post(self,request,id):
         taskdetail = task.objects.get(taskid= id)
         serializer = taskserilizers(instance=taskdetail,data=request.data)
         if serializer.is_valid():

@@ -74,7 +74,6 @@ export default {
   background: #121212;
   border-radius: 10px;
   padding-top: 5px;
-
 }
 
 .addtaskBtn {

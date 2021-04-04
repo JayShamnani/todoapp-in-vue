@@ -26,15 +26,22 @@ const actions = {
     commit("addTask", jsonres);
   },
 
-  async toggleReminder(taskreminder) {
-    const id = taskreminder.id;
-    const res = await fetch(`/api/taskupdate/{}`);
-    console.log(res, id);
+  async toggleReminder({ commit }, UpdatedTask) {
+    const res = await fetch(`/api/taskupdate/${UpdatedTask.taskid}`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(UpdatedTask),
+    });
+    const jsonres = await res.json();
+    commit("toggleReminder", jsonres);
   },
 };
 const mutations = {
   fetchtasks: (state, tasks) => (state.taskstate = tasks),
   addTask: (state, task) => state.newtask.unshift(task),
+  toggleReminder: (state, task) => state.newtask.unshift(task),
 };
 export default {
   state,

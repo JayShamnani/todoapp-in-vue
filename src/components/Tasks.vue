@@ -7,7 +7,7 @@
       :class="[
         items.tasknull
           ? 'task-null'
-          : [items.taskreminder ? 'task-reminder' :none, 'task'],
+          : [items.taskreminder ? 'task-reminder' : 'none', 'task'],
       ]"
     >
       <div class="taskheading">{{ items.taskhead }}</div>
@@ -39,19 +39,22 @@ export default {
   computed: mapGetters(["Taskstore"]),
 
   methods: {
-    ...mapActions(["fetchtasks"]),
+    ...mapActions(["fetchtasks", "toggleReminder"]),
     togglereminder(id) {
       id.taskreminder = !id.taskreminder;
+      const updatedTask = {
+        taskid: id.taskid,
+        taskhead: id.taskhead,
+        taskbody: id.taskbody,
+        taskreminder: id.taskreminder,
+        taskauthor: id.taskauthor,
+      };
+      this.toggleReminder(updatedTask);
     },
     addTask(newTask) {
       this.Taskstore.push(newTask);
     },
     deletetask(id) {
-      // Object.keys(id).forEach(function (key) {
-      //   if (id[key] !== null) {
-      //     delete id[key];
-      //   }
-      // });
       id.tasknull = true;
     },
   },
