@@ -1,20 +1,20 @@
 <template>
   <div>
     <Header />
-    <Login />
+    <LoginComp />
     <Footer />
   </div>
 </template>
 
 <script>
 import Header from "../components/Header";
-import Login from "../components/Login";
+import LoginComp from "../components/LoginComp";
 import Footer from "../components/Footer";
 export default {
   name: "login",
   components: {
     Header,
-    Login,
+    LoginComp,
     Footer,
   },
 };

@@ -37,7 +37,7 @@
       </div>
       <div class="col-sm-10 align-items-center loginbtn">
         <label>Already a Member ?</label>
-        <button class="btn btn-light">Login</button>
+        <router-link to="/login" class="btn btn-light">Login</router-link>
       </div>
       <div class="buttons col-sm-6">
         <button type="button" class="btn btn-success">Submit</button>
