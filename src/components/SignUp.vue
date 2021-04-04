@@ -35,6 +35,10 @@
           placeholder="password"
         />
       </div>
+      <div class="col-sm-10 align-items-center loginbtn">
+        <label>Already a Member ?</label>
+        <button class="btn btn-light">Login</button>
+      </div>
       <div class="buttons col-sm-6">
         <button type="button" class="btn btn-success">Submit</button>
       </div>
@@ -61,6 +65,17 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-around;
+}
+
+.loginbtn {
+  color: #fff;
+  display: flex;
+  margin: 8px 0px;
+  justify-content: space-evenly;
+}
+
+.loginbtn button {
+  padding: 5px;
 }
 
 input {

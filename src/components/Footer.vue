@@ -24,7 +24,7 @@ export default {
   padding: 5px;
   bottom: 0%;
   width: 100%;
-  background-color: #1f1b24;
+  background-color: #121212;
   color: #ffffff;
   font-size: auto;
 }

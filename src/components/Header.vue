@@ -6,8 +6,8 @@
       </div>
       <div class="buttons">
         <router-link to="/" class="btn btn-outline-primary">Home</router-link>
-        <router-link to="/login" class="btn btn-outline-success"
-          >Login</router-link
+        <router-link to="/signup" class="btn btn-outline-success"
+          >Sign Up</router-link
         >
         <router-link to="/about" class="btn btn-outline-info"
           >About</router-link
