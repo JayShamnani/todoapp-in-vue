@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "LoginForm",
   data() {
@@ -60,6 +62,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["addProfile"]),
     onSubmit() {
       const username = this.Username;
       const password = this.Password;
@@ -70,11 +73,13 @@ export default {
           )
         ) {
           const UserProfile = {
-            id: this.Username,
+            username: this.Username,
             name: this.Name,
             password: this.Password,
           };
-          console.log(UserProfile);
+          this.$emit("profileinfo", UserProfile);
+          this.addProfile(UserProfile);
+          this.$router.push({ name: "Home" });
         } else {
           alert("Password doesn't meet requirement");
         }

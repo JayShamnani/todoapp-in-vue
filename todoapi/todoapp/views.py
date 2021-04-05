@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from django.http import request
@@ -28,18 +29,20 @@ class home(View):
     def get(self,request):
         return render(request, self.template_name)
 
-class profileclass(APIView):
-    def get(self,request):
-        pro = profile.objects.all()
-        serializer = profileserilizers(pro, many=True)
-        return Response(serializer.data)
-
+class addProfile(APIView):
     def post(self,request):
         userprofile = request.data
         serializer = profileserilizers(data=userprofile)
         if serializer.is_valid():
             serializer.save()
+            request.session["profile_username"] = userprofile["username"]
 
+        return Response(serializer.data)
+
+class getallProfiles(APIView):
+    def get(self,request):
+        pro = profile.objects.all()
+        serializer = profileserilizers(pro, many=True)
         return Response(serializer.data)
 
 class taskclass(APIView):
@@ -79,3 +82,23 @@ class taskDelete(APIView):
         taskdelete = task.objects.get(taskid=id)
         taskdelete.delete()
         return Response({})
+
+class getProfile(APIView):
+    def get(self,request,pk):
+        profileDetail = profile.objects.filter(id = pk)
+        serializer = profileserilizers(profileDetail,many=True)
+        return Response(serializer.data)
+
+class checkLogin(APIView):
+    def get(self,request):
+        if request.session.has_key("profile_username"):
+            requestprofile = request.session["profile_username"]
+            print(requestprofile)
+            xx = True
+        else:
+            xx = False
+        result = {
+            'Results':xx
+        }
+        print(result)
+        return Response(result)

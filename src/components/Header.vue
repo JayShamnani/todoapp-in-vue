@@ -6,8 +6,14 @@
       </div>
       <div class="buttons">
         <router-link to="/" class="btn btn-outline-primary">Home</router-link>
-        <router-link to="/signup" class="btn btn-outline-success"
-          >Sign Up</router-link
+        <router-link
+          v-if="aclink.link"
+          to="/signup"
+          class="btn btn-outline-success"
+          >Account</router-link
+        >
+        <router-link v-else to="/login" class="btn btn-outline-success"
+          >login</router-link
         >
         <router-link to="/about" class="btn btn-outline-info"
           >About</router-link
@@ -18,8 +24,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Header",
+  data() {
+    return {
+      aclink: {
+        link: true,
+      },
+    };
+  },
+  computed: mapGetters(["Profilestore"]),
+  created() {
+    this.aclink.link = this.Profilestore["Results"];
+  },
 };
 </script>
 

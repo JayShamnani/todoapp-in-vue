@@ -9,7 +9,6 @@ const actions = {
   async fetchtasks({ commit }) {
     const res = await fetch("/api/tasklist");
     const jsondata = await res.json();
-
     commit("fetchtasks", jsondata);
   },
 
