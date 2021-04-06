@@ -39,60 +39,56 @@ export default {
   computed: mapGetters(["Taskstore", "Profilestore"]),
 
   methods: {
-    ...mapActions(["fetchtasks", "toggleReminder", "deleteTask","checkLogin"]),
+    ...mapActions(["fetchtasks", "toggleReminder", "deleteTask", "checkLogin"]),
     togglereminder(id) {
-      if (id.taskauthor !== "YourUsername"){
+      if (id.taskauthor !== "YourUsername") {
         id.taskreminder = !id.taskreminder;
         const updatedTask = {
-        taskid: id.taskid,
-        taskhead: id.taskhead,
-        taskbody: id.taskbody,
-        taskreminder: id.taskreminder,
-        taskauthor: id.taskauthor,
-      };
-      this.toggleReminder(updatedTask);
-      }
-      else{
-      id.taskreminder = !id.taskreminder;
+          taskid: id.taskid,
+          taskhead: id.taskhead,
+          taskbody: id.taskbody,
+          taskreminder: id.taskreminder,
+          taskauthor: id.taskauthor,
+        };
+        this.toggleReminder(updatedTask);
+      } else {
+        id.taskreminder = !id.taskreminder;
       }
     },
     addTask(newTask) {
       this.Taskstore.push(newTask);
     },
     deletetask(id) {
-      if (id.taskauthor !== "YourUsername"){
-      id.tasknull = true;
-      const updatedTask = {
-        taskid: id.taskid,
-        taskhead: id.taskhead,
-        taskbody: id.taskbody,
-        taskreminder: id.taskreminder,
-        taskauthor: id.taskauthor,
-      };
-      this.deleteTask(updatedTask);
+      if (id.taskauthor !== "YourUsername") {
+        id.tasknull = true;
+        const updatedTask = {
+          taskid: id.taskid,
+          taskhead: id.taskhead,
+          taskbody: id.taskbody,
+          taskreminder: id.taskreminder,
+          taskauthor: id.taskauthor,
+        };
+        this.deleteTask(updatedTask);
+      } else {
+        id.tasknull = true;
       }
-      else{
-      id.tasknull = true;
-      }
-      
     },
   },
   created() {
     this.checkLogin().then(() => {
-      if (this.Profilestore.Results === false){
-      const newTask = {
-            taskhead: "This is heading (Task with reminder will have green badge on left)",
-            taskbody: "Double Click on task to add or remove reminder",
-            taskreminder: true,
-            taskauthor: "YourUsername",
-          };
-      this.Taskstore.push(newTask);
-    }
-    else{
-      this.fetchtasks(this.Profilestore["Profile"]);
-    }
+      if (this.Profilestore.Results === false) {
+        const newTask = {
+          taskhead:
+            "This is heading (Task with reminder will have green badge on left)",
+          taskbody: "Double Click on task to add or remove reminder",
+          taskreminder: true,
+          taskauthor: "YourUsername",
+        };
+        this.Taskstore.push(newTask);
+      } else {
+        this.fetchtasks(this.Profilestore["Profile"]);
+      }
     });
-    
   },
 };
 </script>

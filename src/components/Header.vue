@@ -8,7 +8,7 @@
         <router-link to="/" class="btn btn-outline-primary">Home</router-link>
         <router-link
           v-if="Profilestore.Results"
-          to="/signup"
+          :to="Profilestore.Profile"
           class="btn btn-outline-success"
           >Account</router-link
         >

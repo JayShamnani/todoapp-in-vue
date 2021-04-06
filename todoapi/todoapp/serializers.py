@@ -13,3 +13,8 @@ class taskserilizers(serializers.ModelSerializer):
     class Meta:
         model = task
         fields = '__all__'
+
+class getprofile(serializers.ModelSerializer):
+    class Meta:
+        model = profile
+        fields = ['username','name']

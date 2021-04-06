@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 
 from .serializers import profileserilizers
 from .serializers import taskserilizers
+from .serializers import getprofile
 
 # Models
 
@@ -85,8 +86,8 @@ class taskDelete(APIView):
 
 class getProfile(APIView):
     def get(self,request,pk):
-        profileDetail = profile.objects.filter(id = pk)
-        serializer = profileserilizers(profileDetail,many=True)
+        profileDetail = profile.objects.filter(username = pk)
+        serializer = getprofile(profileDetail,many=True)
         return Response(serializer.data)
 
 class checkLogin(APIView):
@@ -149,3 +150,12 @@ class checkUsername(APIView):
                 "Username":0
             }
         return Response(Users)
+
+class Logout(APIView):
+    def get(self,request):
+        try:
+            request.session.flush()
+            request.session.modified = True
+        except KeyError:
+            pass
+        return Response({})

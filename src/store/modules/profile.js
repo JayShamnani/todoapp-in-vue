@@ -1,8 +1,10 @@
 const state = {
   profileState: [],
+  fProfileState: [],
 };
 const getters = {
   Profilestore: (state) => state.profileState,
+  UserProfilestore: (state) => state.fProfileState,
 };
 const actions = {
   async addProfile({ commit }, Profile) {
@@ -44,12 +46,27 @@ const actions = {
     const resjson = await res.json();
     commit("checkUsername", resjson);
   },
+
+  async fetchProfileInfo({ commit }, username) {
+    const res = await fetch(`api/getprofile/${username}`);
+    const rjson = await res.json();
+    commit("fetchProfileInfo", rjson);
+  },
+
+  async logoutuser({ commit }) {
+    const res = await fetch("api/logout");
+    const jres = await res.json();
+
+    commit("logoutuser", jres);
+  },
 };
 const mutations = {
   addProfile: (state) => state,
+  fetchProfileInfo: (state, rjson) => (state.fProfileState = rjson),
   checkLogin: (state, jsonres) => (state.profileState = jsonres),
   profileLogin: (state, jsonres) => (state.profileState = jsonres),
   checkUsername: (state, resjson) => (state.profileState = resjson),
+  logoutuser: (state) => state,
 };
 export default {
   state,

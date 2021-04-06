@@ -3,12 +3,21 @@ import Home from "@/views/Home.vue";
 import About from "@/views/About";
 import SignUp from "@/views/signup";
 import Login from "@/views/Login";
+import Account from "@/views/Account";
 
 const routes = [
   {
     path: "",
     name: "Home",
     component: Home,
+  },
+  {
+    path: "/:account",
+    name: "Account",
+    component: Account,
+    props: {
+      account: String,
+    },
   },
   {
     path: "/about",
