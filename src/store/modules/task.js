@@ -8,7 +8,7 @@ const getters = {
 const actions = {
   async fetchtasks({ commit }, taskuser) {
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + `/api/tasks/${taskuser}`
+      process.env.VUE_APP_API_ENDPOINT + `api/tasks/${taskuser}`
     );
     const jsondata = await res.json();
     commit("fetchtasks", jsondata);
@@ -16,7 +16,7 @@ const actions = {
 
   async addTask({ commit }, newtask) {
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + "/api/taskcreate",
+      process.env.VUE_APP_API_ENDPOINT + "api/taskcreate",
       {
         method: "POST",
         headers: {
@@ -47,7 +47,7 @@ const actions = {
   },
   async deleteTask({ commit }, Task) {
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + `/api/taskdelete/${Task.taskid}`,
+      process.env.VUE_APP_API_ENDPOINT + `api/taskdelete/${Task.taskid}`,
       {
         method: "DELETE",
         headers: {
