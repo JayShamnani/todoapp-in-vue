@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Header",
@@ -36,12 +36,6 @@ export default {
     };
   },
   computed: mapGetters(["Profilestore"]),
-  methods: {
-    ...mapActions(["checkLogin"]),
-  },
-  created() {
-    this.checkLogin();
-  },
 };
 </script>
 

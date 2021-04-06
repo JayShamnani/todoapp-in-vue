@@ -6,8 +6,8 @@ const getters = {
   Taskstore: (state) => state.taskstate,
 };
 const actions = {
-  async fetchtasks({ commit }) {
-    const res = await fetch("/api/tasklist");
+  async fetchtasks({ commit }, taskuser) {
+    const res = await fetch(`/api/tasks/${taskuser}`);
     const jsondata = await res.json();
     commit("fetchtasks", jsondata);
   },
