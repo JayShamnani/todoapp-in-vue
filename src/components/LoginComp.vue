@@ -10,7 +10,12 @@
         <input v-model="password" type="password" class="col-8" />
       </div>
     </form>
-
+    <div class="notauser">
+      <label>Not a User ?</label>
+      <router-link to="/signup" class="btn btn-outline-warning"
+        >Sign Up</router-link
+      >
+    </div>
     <div class="subbutton">
       <button @click="onSubmitss()" class="btn btn-info">Submit</button>
     </div>
@@ -56,7 +61,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.notauser {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-evenly;
+}
 .subbutton {
   margin: 8px 0px;
   display: flex;

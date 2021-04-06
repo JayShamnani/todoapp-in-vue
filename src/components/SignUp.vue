@@ -38,7 +38,9 @@
       </div>
       <div class="col-sm-10 align-items-center loginbtn">
         <label>Already a Member ?</label>
-        <router-link to="/login" class="btn btn-light">Login</router-link>
+        <router-link to="/login" class="btn btn-outline-light"
+          >Login</router-link
+        >
       </div>
       <div class="buttons col-sm-6">
         <button type="button" @click="onSubmit()" class="btn btn-success">
@@ -50,7 +52,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "LoginForm",
@@ -61,8 +63,9 @@ export default {
       Password: "",
     };
   },
+  computed: mapGetters(["Profilestore"]),
   methods: {
-    ...mapActions(["addProfile"]),
+    ...mapActions(["addProfile", "checkUsername"]),
     onSubmit() {
       const username = this.Username;
       const password = this.Password;
@@ -77,9 +80,22 @@ export default {
             name: this.Name,
             password: this.Password,
           };
-          this.$emit("profileinfo", UserProfile);
-          this.addProfile(UserProfile);
-          this.$router.push({ name: "Home" });
+          this.checkUsername(UserProfile.username)
+            .then(() => {
+              if (this.Profilestore["Username"] === 1) {
+                this.addProfile(UserProfile);
+                this.$router.push({ name: "Home" });
+              } else {
+                throw this.Profilestore["Username"];
+              }
+            })
+            .catch(() => {
+              if (this.Profilestore.Username === 0) {
+                alert("Username Already exist, choose different username");
+              } else {
+                alert("something went wrong, try again");
+              }
+            });
         } else {
           alert("Password doesn't meet requirement");
         }

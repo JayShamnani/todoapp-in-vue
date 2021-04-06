@@ -13,7 +13,7 @@ const actions = {
       },
       body: JSON.stringify(Profile),
     });
-    const jsonres = res.json();
+    const jsonres = await res.json();
     commit("addProfile", jsonres);
   },
   async checkLogin({ commit }) {
@@ -32,11 +32,24 @@ const actions = {
     const jsonres = await res.json();
     commit("profileLogin", jsonres);
   },
+
+  async checkUsername({ commit }, username) {
+    const res = await fetch("api/checkusername", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(username),
+    });
+    const resjson = await res.json();
+    commit("checkUsername", resjson);
+  },
 };
 const mutations = {
   addProfile: (state) => state,
   checkLogin: (state, jsonres) => (state.profileState = jsonres),
   profileLogin: (state, jsonres) => (state.profileState = jsonres),
+  checkUsername: (state, resjson) => (state.profileState = resjson),
 };
 export default {
   state,

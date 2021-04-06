@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "addTask",
@@ -34,27 +34,31 @@ export default {
       reminder: false,
     };
   },
+  computed: mapGetters(["Profilestore"]),
   methods: {
     ...mapActions(["addTask"]),
     onSubmit(e) {
       e.preventDefault();
 
-      if (!this.head) {
-        alert("Please Enter Heading for Task");
+      if (this.Profilestore.Profile !== 0) {
+        if (!this.head) {
+          alert("Please Enter Heading for Task");
+        } else {
+          const newTask = {
+            taskhead: this.head,
+            taskbody: this.body,
+            taskreminder: this.reminder,
+            taskauthor: this.Profilestore.Profile,
+          };
+          this.$emit("addTask", newTask);
+          this.addTask(newTask);
+          this.head = "";
+          this.body = "";
+          this.reminder = false;
+        }
+      } else {
+        alert("Please Login to add a task");
       }
-
-      const newTask = {
-        taskhead: this.head,
-        taskbody: this.body,
-        taskreminder: this.reminder,
-        taskauthor: 3,
-      };
-
-      this.$emit("addTask", newTask);
-      this.addTask(newTask);
-      this.head = "";
-      this.body = "";
-      this.reminder = false;
     },
   },
 };

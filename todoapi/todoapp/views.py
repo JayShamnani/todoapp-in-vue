@@ -92,21 +92,23 @@ class getProfile(APIView):
 class checkLogin(APIView):
     def get(self,request):
         if request.session.has_key("profile_username"):
-            requestprofile = request.session["profile_username"]
-            print(requestprofile)
             xx = True
-            print(xx)
+            yy = request.session["profile_username"]
         else:
             xx = False
+            yy = 0
         result = {
-            'Results':xx
+            'Results':xx,
+            "Profile":yy
         }
         return Response(result)
 
 class profileLogin(APIView):
     def post(self,request):
         result = {
-            "Results":False
+            "Results":False,
+            "Profile":0,
+            "Username":0
         }
         prof = profile.objects.filter(username=request.data['username'])
         if len(prof) < 2:
@@ -114,14 +116,36 @@ class profileLogin(APIView):
                 if i.password == request.data['password']:
                     request.session["profile_username"]=i.username
                     result = {
-                        'Results':True
+                        'Results':True,
+                        "Profile":i.username,
+                        "Username":0
                     }
                 else:
                     result = {
-                        'Results':'PasswordError'
+                        'Results':'PasswordError',
+                        "Profile":0,
+                        "Username":0
                     }
         else:
             result = {
-                'Results':False
+                'Results':False,
+                "Profile":0,
+                "Username":0
             }
         return Response(result)
+
+class checkUsername(APIView):
+    def post(self,request):
+        username = request.data
+        pro = profile.objects.filter(username = username)
+        if len(pro) < 1:
+            Users = {
+                "Results":True,
+                "Username":1
+            }
+        else:
+            Users = {
+                "Results":False,
+                "Username":0
+            }
+        return Response(Users)
