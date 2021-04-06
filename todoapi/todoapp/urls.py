@@ -2,7 +2,7 @@
 from django.urls import path,include
 from rest_framework import routers
 
-from .views import checkLogin, home, taskDelete, taskUpdate, taskcreate, tasklist
+from .views import checkLogin, home, profileLogin, taskDelete, taskUpdate, taskcreate, tasklist
 from .views import addProfile
 from .views import getallProfiles
 from .views import taskclass
@@ -17,6 +17,7 @@ urlpatterns = [
     path('getallprofile',getallProfiles.as_view()),
     path('getprofile/<int:pk>',getProfile.as_view()),
     path('checkprofile',checkLogin.as_view()),
+    path('profilelogin',profileLogin.as_view()),
     path('taskcreate',taskcreate.as_view()),
     path('tasks/<str:pk>',taskclass.as_view()),
     path('tasklist',tasklist.as_view()),

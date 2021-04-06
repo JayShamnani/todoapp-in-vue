@@ -68,7 +68,6 @@ export default {
   },
   created() {
     this.fetchtasks();
-    console.log("This is taskstore", this.Taskstore);
   },
 };
 </script>

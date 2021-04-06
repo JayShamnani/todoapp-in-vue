@@ -3,28 +3,64 @@
     <form class="col-md-12">
       <div>
         <label class="col-4">Username</label>
-        <input type="text" class="col-8" />
+        <input v-model="username" type="text" class="col-8" />
       </div>
       <div>
         <label class="col-4">Password</label>
-        <input type="password" class="col-8" />
-      </div>
-      <div class="subbutton">
-        <button class="btn btn-info">Submit</button>
+        <input v-model="password" type="password" class="col-8" />
       </div>
     </form>
+
+    <div class="subbutton">
+      <button @click="onSubmitss()" class="btn btn-info">Submit</button>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "LoginComp",
+  computed: mapGetters(["Profilestore"]),
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+  methods: {
+    ...mapActions(["profileLogin"]),
+    onSubmitss() {
+      const profileData = {
+        username: this.username,
+        password: this.password,
+      };
+      this.profileLogin(profileData)
+        .then(() => {
+          if (this.Profilestore["Results"] === true) {
+            this.$router.push({ name: "Home" });
+          } else {
+            throw this.Profilestore["Results"];
+          }
+        })
+        .catch(() => {
+          if (this.Profilestore["Results"] === "PasswordError") {
+            alert("Password Error");
+          } else {
+            alert("User Does not Exists");
+          }
+        });
+    },
+  },
 };
 </script>
 
 <style>
 .subbutton {
-  margin: 5px 0px;
+  margin: 8px 0px;
+  display: flex;
+  justify-content: center;
 }
 .login {
   padding-top: 80px;

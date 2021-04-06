@@ -95,10 +95,33 @@ class checkLogin(APIView):
             requestprofile = request.session["profile_username"]
             print(requestprofile)
             xx = True
+            print(xx)
         else:
             xx = False
         result = {
             'Results':xx
         }
-        print(result)
+        return Response(result)
+
+class profileLogin(APIView):
+    def post(self,request):
+        result = {
+            "Results":False
+        }
+        prof = profile.objects.filter(username=request.data['username'])
+        if len(prof) < 2:
+            for i in prof:
+                if i.password == request.data['password']:
+                    request.session["profile_username"]=i.username
+                    result = {
+                        'Results':True
+                    }
+                else:
+                    result = {
+                        'Results':'PasswordError'
+                    }
+        else:
+            result = {
+                'Results':False
+            }
         return Response(result)

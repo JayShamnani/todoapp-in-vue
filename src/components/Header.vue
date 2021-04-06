@@ -7,7 +7,7 @@
       <div class="buttons">
         <router-link to="/" class="btn btn-outline-primary">Home</router-link>
         <router-link
-          v-if="aclink.link"
+          v-if="Profilestore.Results"
           to="/signup"
           class="btn btn-outline-success"
           >Account</router-link
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Header",
@@ -36,8 +36,11 @@ export default {
     };
   },
   computed: mapGetters(["Profilestore"]),
+  methods: {
+    ...mapActions(["checkLogin"]),
+  },
   created() {
-    this.aclink.link = this.Profilestore["Results"];
+    this.checkLogin();
   },
 };
 </script>

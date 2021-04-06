@@ -21,10 +21,22 @@ const actions = {
     const jsonres = await res.json();
     commit("checkLogin", jsonres);
   },
+  async profileLogin({ commit }, profiledata) {
+    const res = await fetch("api/profilelogin", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(profiledata),
+    });
+    const jsonres = await res.json();
+    commit("profileLogin", jsonres);
+  },
 };
 const mutations = {
   addProfile: (state) => state,
   checkLogin: (state, jsonres) => (state.profileState = jsonres),
+  profileLogin: (state, jsonres) => (state.profileState = jsonres),
 };
 export default {
   state,

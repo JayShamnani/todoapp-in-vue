@@ -4,7 +4,7 @@ from django.db.models.deletion import CASCADE
 # Create your models here.
 class profile(models.Model):
     id = models.AutoField(primary_key=True,unique=True)
-    username = models.CharField(max_length=200)
+    username = models.CharField(max_length=200,unique=True)
     name = models.CharField(max_length=500)
     password = models.CharField(max_length=100)
 
