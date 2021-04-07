@@ -16,7 +16,10 @@ const routes = [
     name: "Account",
     component: Account,
     props: {
-      account: String,
+      account: {
+        type: String,
+        default: "jayshamnani",
+      }
     },
   },
   {

@@ -22,7 +22,6 @@ const actions = {
     commit("addProfile", jsonres);
   },
   async checkLogin({ commit }) {
-    console.log(process.env.VUE_APP_API_ENDPOINT);
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + "api/checkprofile"
     );

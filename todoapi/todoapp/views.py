@@ -133,6 +133,7 @@ class profileLogin(APIView):
                 "Profile":0,
                 "Username":0
             }
+        print(result)
         return Response(result)
 
 class checkUsername(APIView):
