@@ -28,13 +28,6 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "Header",
-  data() {
-    return {
-      aclink: {
-        link: true,
-      },
-    };
-  },
   computed: mapGetters(["Profilestore"]),
 };
 </script>

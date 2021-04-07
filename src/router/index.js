@@ -19,7 +19,7 @@ const routes = [
       account: {
         type: String,
         default: "jayshamnani",
-      }
+      },
     },
   },
   {

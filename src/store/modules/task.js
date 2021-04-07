@@ -6,6 +6,7 @@ const getters = {
   Taskstore: (state) => state.taskstate,
 };
 const actions = {
+  // fetching tasks created by user
   async fetchtasks({ commit }, taskuser) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + `api/tasks/${taskuser}`
@@ -13,7 +14,7 @@ const actions = {
     const jsondata = await res.json();
     commit("fetchtasks", jsondata);
   },
-
+  // adding task
   async addTask({ commit }, newtask) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + "api/taskcreate",
@@ -29,7 +30,7 @@ const actions = {
 
     commit("addTask", jsonres);
   },
-
+  // updating reminder
   async toggleReminder({ commit }, UpdatedTask) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT +
@@ -45,6 +46,7 @@ const actions = {
     const jsonres = await res.json();
     commit("toggleReminder", jsonres);
   },
+  // deleting task
   async deleteTask({ commit }, Task) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + `api/taskdelete/${Task.taskid}`,

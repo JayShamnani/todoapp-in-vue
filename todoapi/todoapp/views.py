@@ -25,6 +25,7 @@ from .models import task
 
 # Views
 
+# View to check if server is running or not
 class home(View):
     template_name = 'home.html'
     def get(self,request):
@@ -40,12 +41,14 @@ class addProfile(APIView):
 
         return Response(serializer.data)
 
+# Fetching all the profiles only for testing and development!!
 class getallProfiles(APIView):
     def get(self,request):
         pro = profile.objects.all()
         serializer = profileserilizers(pro, many=True)
         return Response(serializer.data)
 
+# View for getting all the task created by user
 class taskclass(APIView):
     def get(self,request,pk):
         tasks = task.objects.filter(taskauthor = pk)
@@ -84,6 +87,7 @@ class taskDelete(APIView):
         taskdelete.delete()
         return Response({})
 
+# sending particular profile
 class getProfile(APIView):
     def get(self,request,pk):
         profileDetail = profile.objects.filter(username = pk)
@@ -92,9 +96,9 @@ class getProfile(APIView):
 
 class checkLogin(APIView):
     def get(self,request):
-        if request.session.has_key("profile_username"):
+        if request.session.has_key("profileusername"):
             xx = True
-            yy = request.session["profile_username"]
+            yy = request.session["profileusername"]
         else:
             xx = False
             yy = 0
@@ -115,7 +119,7 @@ class profileLogin(APIView):
         if len(prof) < 2:
             for i in prof:
                 if i.password == request.data['password']:
-                    request.session["profile_username"]=i.username
+                    request.session["profileusername"]=i.username
                     result = {
                         'Results':True,
                         "Profile":i.username,

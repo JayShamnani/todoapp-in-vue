@@ -7,6 +7,7 @@ const getters = {
   UserProfilestore: (state) => state.fProfileState,
 };
 const actions = {
+  // Sign up method
   async addProfile({ commit }, Profile) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + "api/addprofile",
@@ -21,6 +22,7 @@ const actions = {
     const jsonres = await res.json();
     commit("addProfile", jsonres);
   },
+  // Checking user login
   async checkLogin({ commit }) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + "api/checkprofile"
@@ -28,6 +30,7 @@ const actions = {
     const jsonres = await res.json();
     commit("checkLogin", jsonres);
   },
+  // Logining user in
   async profileLogin({ commit }, profiledata) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + "api/profilelogin",
@@ -42,7 +45,7 @@ const actions = {
     const jsonres = await res.json();
     commit("profileLogin", jsonres);
   },
-
+  // Checking username on sign up
   async checkUsername({ commit }, username) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + "api/checkusername",
@@ -57,7 +60,7 @@ const actions = {
     const resjson = await res.json();
     commit("checkUsername", resjson);
   },
-
+  // for profile page
   async fetchProfileInfo({ commit }, username) {
     const res = await fetch(
       process.env.VUE_APP_API_ENDPOINT + `api/getprofile/${username}`
@@ -65,7 +68,7 @@ const actions = {
     const rjson = await res.json();
     commit("fetchProfileInfo", rjson);
   },
-
+  // Logining user out
   async logoutuser({ commit }) {
     const res = await fetch(process.env.VUE_APP_API_ENDPOINT + "api/logout");
     const jres = await res.json();
