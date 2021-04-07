@@ -4,7 +4,7 @@
 <a href="https://github.com/vuejs/vue-router"><img src="https://img.shields.io/badge/vuerouter-4.5.0-yellowgreen?style=for-the-badge" /></a>
 <a href="https://github.com/django/django"><img src="https://img.shields.io/badge/django-3.1.7-blue?style=for-the-badge" /></a>
 <a href="https://github.com/encode/django-rest-framework"><img src="https://img.shields.io/badge/djangorestframework-3.12.4-blueviolet?style=for-the-badge" /></a>
-<a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-13.0.0-#121212?style=for-the-badge" /></a>
+<a href="https://www.postgresql.org/"><img src="https://img.shields.io/badge/PostgreSQL-13.0.0-121212?style=for-the-badge" /></a>
 </div>
 
 # To Do App in Vue JS
