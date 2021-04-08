@@ -1,11 +1,5 @@
-from django import views
-from django.http.response import JsonResponse
-from django.shortcuts import render
-from django.views import View
-from django.http import request
-from django.conf import settings
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.contrib.auth.models import User
+
 
 #Rest Framework
 
@@ -29,7 +23,6 @@ from .serializers import getprofile
 import json
 # Models
 
-from .models import profile
 from .models import task
 
 # Views
@@ -52,7 +45,7 @@ class addProfile(APIView):
 
 class getallProfiles(APIView):
     def get(self,request):
-        pro = profile.objects.all()
+        pro = User.objects.all()
         serializer = profileserilizers(pro, many=True)
         return Response(serializer.data)
 
@@ -96,7 +89,7 @@ class taskDelete(APIView):
 
 class getProfile(APIView):
     def get(self,request,pk):
-        profileDetail = profile.objects.filter(username = pk)
+        profileDetail = User.objects.filter(username = pk)
         serializer = getprofile(profileDetail,many=True)
         return Response(serializer.data)
 
@@ -121,7 +114,7 @@ class profileLogin(APIView):
             "Profile":0,
             "Username":0
         }
-        prof = profile.objects.filter(username=request.data['username'])
+        prof = User.objects.filter(username=request.data['username'])
         if len(prof) < 2:
             for i in prof:
                 if i.password == request.data['password']:
@@ -148,7 +141,7 @@ class profileLogin(APIView):
 class checkUsername(APIView):
     def post(self,request):
         username = request.data
-        pro = profile.objects.filter(username = username)
+        pro = User.objects.filter(username = username)
         if len(pro) < 1:
             Users = {
                 "Results":True,
@@ -170,20 +163,6 @@ class Logout(APIView):
             pass
         return Response({})
 
-
-# class RequestToken(APIView):
-#     def post(self,request):
-#         username = request.data["username"]
-#         serializer = profileserilizers(data=request.data,context={'request': request})
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data['user']
-#         token, created = Token.objects.get_or_create(user=user)
-#         return Response({
-#             'token': token.key,
-#             'Results': True,
-#             'Profile': username
-#         })
-
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -203,16 +182,21 @@ class RequestToken(APIView):
             'Profile': username
         })
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-
-        # Add custom claims
-        token['name'] = user.name
-        # ...
-
-        return token
-
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+class createuser(APIView):
+    def post(self,request):
+        userprofile = request.data
+        try:
+            user = User.objects.create_user(userprofile['username'],userprofile['email'],userprofile['password'])
+            user.save()
+            result = {
+                "Results" : True,
+                "Profile" : userprofile['username'],
+                "Username" : 0
+            }
+        except:
+            result = {
+                "Results" : False,
+                "Profile" : 0,
+                "Username" : 0
+            }
+        return Response(result)
