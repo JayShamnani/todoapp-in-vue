@@ -1,7 +1,11 @@
+from django import views
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.views import View
 from django.http import request
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 #Rest Framework
 
@@ -10,6 +14,10 @@ from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from rest_framework import serializers
 from rest_framework.views import APIView
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
+
 
 
 # Serializers
@@ -18,6 +26,7 @@ from .serializers import profileserilizers
 from .serializers import taskserilizers
 from .serializers import getprofile
 
+import json
 # Models
 
 from .models import profile
@@ -25,10 +34,11 @@ from .models import task
 
 # Views
 
-class home(View):
-    template_name = 'home.html'
+class home(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
-        return render(request, self.template_name)
+        content = {'message': 'Hello, World!'}
+        return Response(content)
 
 class addProfile(APIView):
     def post(self,request):
@@ -159,3 +169,50 @@ class Logout(APIView):
         except KeyError:
             pass
         return Response({})
+
+
+# class RequestToken(APIView):
+#     def post(self,request):
+#         username = request.data["username"]
+#         serializer = profileserilizers(data=request.data,context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.validated_data['user']
+#         token, created = Token.objects.get_or_create(user=user)
+#         return Response({
+#             'token': token.key,
+#             'Results': True,
+#             'Profile': username
+#         })
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+class RequestToken(APIView):
+    def post(self,request):
+        username = request.data["username"]
+        # serializer = profileserilizers(data=request.data,context={'request': request})
+        # serializer.is_valid(raise_exception=True)
+        # user = serializer.validated_data['username']
+        # print(user)
+        refresh = RefreshToken.for_user(username)
+        # token = Token.objects.get_or_create(user=user)
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh':str(refresh),
+            'Results': True,
+            'Profile': username
+        })
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['name'] = user.name
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
