@@ -13,13 +13,13 @@
       </div>
 
       <div class="col-sm-10">
-        <label class="col-4">Name</label>
+        <label class="col-4">Email</label>
         <input
           class="col-7"
-          v-model="Name"
-          type="text"
-          name="Name"
-          placeholder="Tony Stark"
+          v-model="Email"
+          type="email"
+          name="Email"
+          placeholder="tony@starkindustries.com"
         />
       </div>
 
@@ -32,10 +32,13 @@
           name="Password"
           placeholder="password"
         />
-        <p style="color: #fff">One lowercase and uppercase letters required</p>
-        <p style="color: #fff">8 characters minimum</p>
-        <p style="color: #fff">One number and special character required</p>
       </div>
+      <div class="col-sm-7 p-tag">
+        <li>One lowercase and uppercase letters required</li>
+        <li>8 characters minimum</li>
+        <li>One number and special character required</li>
+      </div>
+
       <div class="col-sm-10 align-items-center loginbtn">
         <label>Already a Member ?</label>
         <router-link to="/login" class="btn btn-outline-light"
@@ -59,7 +62,7 @@ export default {
   data() {
     return {
       Username: "",
-      Name: "",
+      Email: "",
       Password: "",
     };
   },
@@ -77,7 +80,7 @@ export default {
         ) {
           const UserProfile = {
             username: this.Username,
-            name: this.Name,
+            email: this.Email,
             password: this.Password,
           };
           this.checkUsername(UserProfile.username)
@@ -113,6 +116,12 @@ export default {
 </script>
 
 <style scoped>
+.p-tag {
+  color: #fff;
+  margin: 10px 0px;
+  margin-left: 30px;
+  font-size: 12px;
+}
 .container label {
   text-align: right;
   color: #fff;

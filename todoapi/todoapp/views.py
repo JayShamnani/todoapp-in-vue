@@ -1,12 +1,18 @@
 from django.contrib.auth.models import User
+from django.core import exceptions
 
 
 #Rest Framework
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+#Rest Framework Token
+
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.views import ObtainAuthToken
+
 
 # Serializers
 
@@ -47,7 +53,8 @@ class getallProfiles(APIView):
 # View for getting all the task created by user
 class taskclass(APIView):
     def get(self,request,pk):
-        tasks = task.objects.filter(taskauthor = pk)
+        users = User.objects.get(username = pk)
+        tasks = task.objects.filter(taskauthor = users.id)
         serializer = taskserilizers(tasks, many=True)
         return Response(serializer.data)
 
@@ -91,13 +98,14 @@ class getProfile(APIView):
         return Response(serializer.data)
 
 class checkLogin(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
-        if request.session.has_key("profileusername"):
-            xx = True
-            yy = request.session["profileusername"]
-        else:
-            xx = False
-            yy = 0
+        tokenheader = request.META['HTTP_AUTHORIZATION']
+        tok = tokenheader[6:]
+        tokenuser = Token.objects.get(key = tok)
+        xx = True
+        yy = str(tokenuser.user)
+        # yy = 'shamnanijay123'
         result = {
             'Results':xx,
             "Profile":yy
@@ -119,6 +127,7 @@ class profileLogin(APIView):
                     result = {
                         'Results':True,
                         "Profile":i.username,
+                        "ProfileID":i.id,
                         "Username":0
                     }
                 else:
@@ -150,6 +159,38 @@ class checkUsername(APIView):
                 "Username":0
             }
         return Response(Users)
+class LoginAPI(ObtainAuthToken):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,
+                                           context={'request': request})
+        prof = User.objects.filter(username=request.data['username'])
+        if len(prof) == 0:
+            result = {
+                'Results':0,
+                "Profile":0,
+                "Username":0
+            }
+        else:
+            if serializer.is_valid():
+                user = serializer.validated_data['user']
+                if user is None:
+                    print("no user")
+                token, created = Token.objects.get_or_create(user=user)
+                result = {
+                    'Results':True,
+                    'token': token.key,
+                    "Profile":user.username,
+                    "Username":0
+                }
+            else:
+                result = {
+                    'Results':"PasswordError",
+                    "Profile":0,
+                    "Username":0
+                }
+        return Response(result)
+
 
 class createuser(APIView):
     def post(self,request):

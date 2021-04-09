@@ -1,4 +1,5 @@
 const state = {
+  accessToken:0,
   profileState: [],
   fProfileState: [],
 };
@@ -10,7 +11,7 @@ const actions = {
   // Sign up method
   async addProfile({ commit }, Profile) {
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + "api/addprofile",
+      process.env.VUE_APP_API_ENDPOINT + "api/createuser",
       {
         method: "POST",
         headers: {
@@ -24,16 +25,32 @@ const actions = {
   },
   // Checking user login
   async checkLogin({ commit }) {
+    var profileToken = "";
+    if(localStorage.getItem('accessToken') === null){
+      profileToken = null;
+    const errobject = {
+      "Results":false,
+      "Profile":0
+    }
+    commit("checkLogin",errobject);
+  }
+    else{
+      profileToken = "Token "+localStorage.getItem('accessToken')
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + "api/checkprofile"
-    );
-    const jsonres = await res.json();
-    commit("checkLogin", jsonres);
+      process.env.VUE_APP_API_ENDPOINT + "api/checkprofile",{
+        headers:{
+          "Authorization":profileToken,
+        }
+      }
+    )
+      const jsonres = await res.json();
+      commit("checkLogin", jsonres);
+    }
   },
   // Logining user in
   async profileLogin({ commit }, profiledata) {
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + "api/profilelogin",
+      process.env.VUE_APP_API_ENDPOINT + "api/api-token-auth",
       {
         method: "POST",
         headers: {
@@ -43,6 +60,7 @@ const actions = {
       }
     );
     const jsonres = await res.json();
+    localStorage.setItem('accessToken', jsonres.token);
     commit("profileLogin", jsonres);
   },
   // Checking username on sign up
@@ -79,7 +97,7 @@ const actions = {
 const mutations = {
   addProfile: (state) => state,
   fetchProfileInfo: (state, rjson) => (state.fProfileState = rjson),
-  checkLogin: (state, jsonres) => (state.profileState = jsonres),
+  checkLogin: (state, jsonres) => (state.profileState = jsonres, state.accessToken = jsonres.token),
   profileLogin: (state, jsonres) => (state.profileState = jsonres),
   checkUsername: (state, resjson) => (state.profileState = resjson),
   logoutuser: (state) => state,
