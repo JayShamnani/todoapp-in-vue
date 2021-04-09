@@ -3,14 +3,8 @@ from django.contrib.auth.models import User
 
 #Rest Framework
 
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.serializers import Serializer
-from rest_framework import serializers
 from rest_framework.views import APIView
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
 
 
 
@@ -28,7 +22,7 @@ from .models import task
 # Views
 
 class home(APIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     def get(self,request):
         content = {'message': 'Hello, World!'}
         return Response(content)
@@ -162,26 +156,6 @@ class Logout(APIView):
         except KeyError:
             pass
         return Response({})
-
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
-class RequestToken(APIView):
-    def post(self,request):
-        username = request.data["username"]
-        # serializer = profileserilizers(data=request.data,context={'request': request})
-        # serializer.is_valid(raise_exception=True)
-        # user = serializer.validated_data['username']
-        # print(user)
-        refresh = RefreshToken.for_user(username)
-        # token = Token.objects.get_or_create(user=user)
-        return Response({
-            'access': str(refresh.access_token),
-            'refresh':str(refresh),
-            'Results': True,
-            'Profile': username
-        })
-
 class createuser(APIView):
     def post(self,request):
         userprofile = request.data
