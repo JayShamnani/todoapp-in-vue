@@ -75,7 +75,6 @@ export default {
     },
   },
   created() {
-    console.log(this.Profilestore);
     this.checkLogin().then(() => {
       if (this.Profilestore.Results === false) {
         const newTask = {
@@ -87,7 +86,6 @@ export default {
         };
         this.Taskstore.push(newTask);
       } else {
-        console.log(this.Profilestore);
         this.fetchtasks(this.Profilestore["Profile"]);
       }
     });

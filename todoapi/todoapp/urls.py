@@ -3,7 +3,7 @@ from django.urls import path,include
 from rest_framework import routers
 from rest_framework.authtoken import views
 
-from .views import LoginAPI, DrfTokenDelete
+from .views import LoginAPI, LogoutAPI
 from .views import checkLogin
 from .views import checkUsername
 from .views import createuser
@@ -30,7 +30,7 @@ urlpatterns = [
     path('createuser',createuser.as_view()),
     # path('api-token-auth', views.obtain_auth_token),
     path('api-token-auth', LoginAPI.as_view()),
-    path('drf-token-delete',DrfTokenDelete.as_view()),
+    path('drf-token-delete',LogoutAPI.as_view()),
     path('taskcreate',taskcreate.as_view()),
     path('tasks/<str:pk>',taskclass.as_view()),
     path('tasklist',tasklist.as_view()),

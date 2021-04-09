@@ -30,7 +30,10 @@ export default {
   methods: {
     ...mapActions(["fetchProfileInfo", "checkLogin", "logoutuser"]),
     logout() {
-      this.logoutuser().then(() => {
+      const profiledict = {
+        user: this.UserProfilestore[0].username,
+      };
+      this.logoutuser(profiledict).then(() => {
         this.$router.push({ name: "Home" });
       });
     },

@@ -1,5 +1,5 @@
 const state = {
-  accessToken:0,
+  accessToken: 0,
   profileState: [],
   fProfileState: [],
 };
@@ -26,23 +26,23 @@ const actions = {
   // Checking user login
   async checkLogin({ commit }) {
     var profileToken = "";
-    if(localStorage.getItem('accessToken') === null){
+    if (localStorage.getItem("accessToken") === null) {
       profileToken = null;
-    const errobject = {
-      "Results":false,
-      "Profile":0
-    }
-    commit("checkLogin",errobject);
-  }
-    else{
-      profileToken = "Token "+localStorage.getItem('accessToken')
-    const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT + "api/checkprofile",{
-        headers:{
-          "Authorization":profileToken,
+      const errobject = {
+        Results: false,
+        Profile: 0,
+      };
+      commit("checkLogin", errobject);
+    } else {
+      profileToken = "Token " + localStorage.getItem("accessToken");
+      const res = await fetch(
+        process.env.VUE_APP_API_ENDPOINT + "api/checkprofile",
+        {
+          headers: {
+            Authorization: profileToken,
+          },
         }
-      }
-    )
+      );
       const jsonres = await res.json();
       commit("checkLogin", jsonres);
     }
@@ -60,7 +60,7 @@ const actions = {
       }
     );
     const jsonres = await res.json();
-    localStorage.setItem('accessToken', jsonres.token);
+    localStorage.setItem("accessToken", jsonres.token);
     commit("profileLogin", jsonres);
   },
   // Checking username on sign up
@@ -87,9 +87,19 @@ const actions = {
     commit("fetchProfileInfo", rjson);
   },
   // Logining user out
-  async logoutuser({ commit }) {
-    const res = await fetch(process.env.VUE_APP_API_ENDPOINT + "api/logout");
+  async logoutuser({ commit }, username) {
+    const res = await fetch(
+      process.env.VUE_APP_API_ENDPOINT + "api/drf-token-delete",
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(username),
+      }
+    );
     const jres = await res.json();
+    localStorage.removeItem("accessToken");
 
     commit("logoutuser", jres);
   },
@@ -97,10 +107,12 @@ const actions = {
 const mutations = {
   addProfile: (state) => state,
   fetchProfileInfo: (state, rjson) => (state.fProfileState = rjson),
-  checkLogin: (state, jsonres) => (state.profileState = jsonres, state.accessToken = jsonres.token),
+  checkLogin: (state, jsonres) => (
+    (state.profileState = jsonres), (state.accessToken = jsonres.token)
+  ),
   profileLogin: (state, jsonres) => (state.profileState = jsonres),
   checkUsername: (state, resjson) => (state.profileState = resjson),
-  logoutuser: (state) => state,
+  logoutuser: (state, jres) => (state.profileState = jres),
 };
 export default {
   state,

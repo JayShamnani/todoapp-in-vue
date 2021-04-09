@@ -212,9 +212,13 @@ class createuser(APIView):
         return Response(result)
 
 from rest_framework import status
-class DrfTokenDelete(APIView):
+class LogoutAPI(APIView):
     def post(self, request):
         data = request.data
         user = User.objects.get(username=data["user"])
         user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        result = {
+            "Results": False,
+            "Profile": 0,
+        }
+        return Response(result)
