@@ -33,8 +33,7 @@ const actions = {
   // updating reminder
   async toggleReminder({ commit }, UpdatedTask) {
     const res = await fetch(
-      process.env.VUE_APP_API_ENDPOINT +
-        `/api/taskupdate/${UpdatedTask.taskid}`,
+      process.env.VUE_APP_API_ENDPOINT + `api/taskupdate/${UpdatedTask.taskid}`,
       {
         method: "POST",
         headers: {

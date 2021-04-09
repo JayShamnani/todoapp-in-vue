@@ -13,7 +13,7 @@
       <div class="taskheading">{{ items.taskhead }}</div>
       <div class="taskbody">{{ items.taskbody }}</div>
       <div class="delete">
-        <div class="taskauthor">{{ items.taskauthor }}</div>
+        <div class="taskauthor"></div>
         <i @click="deletetask(items)" class="far fa-trash-alt"></i>
       </div>
     </div>

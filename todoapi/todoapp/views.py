@@ -61,11 +61,14 @@ class taskclass(APIView):
 class taskcreate(APIView):
     def post(self,request):
         taskdata = request.data
+        taskuser = User.objects.get(username = taskdata["taskauthor"])
+        taskdata["taskauthor"] = taskuser.id
         serializer = taskserilizers(data=taskdata)
 
         if serializer.is_valid():
             serializer.save()
-
+        else:
+            print("Err..")
         return Response(serializer.data)
 
 class tasklist(APIView):
@@ -181,6 +184,7 @@ class LoginAPI(ObtainAuthToken):
                     'Results':True,
                     'token': token.key,
                     "Profile":user.username,
+                    "ProfileID":user.id,
                     "Username":0
                 }
             else:
