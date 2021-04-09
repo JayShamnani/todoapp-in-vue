@@ -1,10 +1,18 @@
 # from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.authtoken import views
 
-from .views import Logout, checkLogin, checkUsername, createuser, home, profileLogin, taskDelete, taskUpdate, taskcreate, tasklist
-# from .views import addProfile
+from .views import DrfTokenDelete
+from .views import checkLogin
+from .views import checkUsername
+from .views import createuser
+from .views import home
+from .views import profileLogin
+from .views import taskDelete
+from .views import taskUpdate
+from .views import taskcreate
+from .views import tasklist
 from .views import getallProfiles
 from .views import taskclass
 from .views import getProfile
@@ -19,11 +27,10 @@ urlpatterns = [
     path('checkprofile',checkLogin.as_view()),
     path('checkusername',checkUsername.as_view()),
     path('profilelogin',profileLogin.as_view()),
-    path('taskcreate',taskcreate.as_view()),
     path('createuser',createuser.as_view()),
-    path('token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('logout',Logout.as_view()),
+    path('api-token-auth', views.obtain_auth_token),
+    path('drf-token-delete',DrfTokenDelete.as_view()),
+    path('taskcreate',taskcreate.as_view()),
     path('tasks/<str:pk>',taskclass.as_view()),
     path('tasklist',tasklist.as_view()),
     path('taskupdate/<str:id>',taskUpdate.as_view()),

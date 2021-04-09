@@ -5,8 +5,8 @@ from django.contrib.auth.models import User
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 
 # Serializers
 
@@ -21,14 +21,8 @@ from .models import task
 
 # Views
 
-<<<<<<< HEAD
-# View to check if server is running or not
-class home(View):
-    template_name = 'home.html'
-=======
 class home(APIView):
-    # permission_classes = (IsAuthenticated,)
->>>>>>> TokenBasedAuth
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
         content = {'message': 'Hello, World!'}
         return Response(content)
@@ -157,14 +151,6 @@ class checkUsername(APIView):
             }
         return Response(Users)
 
-class Logout(APIView):
-    def get(self,request):
-        try:
-            request.session.flush()
-            request.session.modified = True
-        except KeyError:
-            pass
-        return Response({})
 class createuser(APIView):
     def post(self,request):
         userprofile = request.data
@@ -183,3 +169,11 @@ class createuser(APIView):
                 "Username" : 0
             }
         return Response(result)
+
+from rest_framework import status
+class DrfTokenDelete(APIView):
+    def post(self, request):
+        data = request.data
+        user = User.objects.get(username=data["user"])
+        user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
