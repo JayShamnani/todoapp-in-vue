@@ -86,8 +86,11 @@ export default {
           this.checkUsername(UserProfile.username)
             .then(() => {
               if (this.Profilestore["Username"] === 1) {
-                this.addProfile(UserProfile);
-                this.$router.push({ name: "Home" });
+                this.addProfile(UserProfile).then(() => {
+                  this.$router.push({ name: "Home" }).then(() => {
+                    location.reload();
+                  });
+                });
               } else {
                 throw this.Profilestore["Username"];
               }

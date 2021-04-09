@@ -21,6 +21,7 @@ const actions = {
       }
     );
     const jsonres = await res.json();
+    localStorage.setItem("accessToken", jsonres.token);
     commit("addProfile", jsonres);
   },
   // Checking user login

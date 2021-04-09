@@ -26,7 +26,7 @@ export default {
       Username: "",
     };
   },
-  computed: mapGetters(["Profilestore","Taskstore", "UserProfilestore"]),
+  computed: mapGetters(["Profilestore", "Taskstore", "UserProfilestore"]),
   methods: {
     ...mapActions(["fetchProfileInfo", "checkLogin", "logoutuser"]),
     logout() {
@@ -34,8 +34,8 @@ export default {
         user: this.UserProfilestore[0].username,
       };
       this.logoutuser(profiledict).then(() => {
-        this.$router.push({ name: "Home" }).then(() =>{
-        location.reload();
+        this.$router.push({ name: "Home" }).then(() => {
+          location.reload();
         });
       });
     },

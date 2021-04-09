@@ -202,8 +202,10 @@ class createuser(APIView):
         try:
             user = User.objects.create_user(userprofile['username'],userprofile['email'],userprofile['password'])
             user.save()
+            token, created = Token.objects.get_or_create(user=user)
             result = {
                 "Results" : True,
+                "token" : token.key,
                 "Profile" : userprofile['username'],
                 "Username" : 0
             }
