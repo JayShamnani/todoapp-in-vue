@@ -1,12 +1,12 @@
 from django.db import models
 from django.db.models import fields
 from rest_framework import serializers
-from .models import profile
+from django.contrib.auth.models import User
 from .models import task
 
 class profileserilizers(serializers.ModelSerializer):
     class Meta:
-        model = profile
+        model = User
         fields = '__all__'
 
 class taskserilizers(serializers.ModelSerializer):
@@ -16,5 +16,5 @@ class taskserilizers(serializers.ModelSerializer):
 
 class getprofile(serializers.ModelSerializer):
     class Meta:
-        model = profile
-        fields = ['username','name']
+        model = User
+        fields = ['username']
