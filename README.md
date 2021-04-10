@@ -10,11 +10,11 @@
 # To Do App in Vue JS
 <div>
 
-![Home Page](https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoHome.jpeg?raw=true)
+<img src="https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoHome.jpeg?raw=true" width="100">
 
-![Login Page](https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoLogin.jpeg?raw=true)
+<img src="https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoLogin.jpeg?raw=true" width="100">
 
-![About Page](https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoAbout.jpeg?raw=true)
+<img src="https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoAbout.jpeg?raw=true" width="100">
 
 </div>
 ## Project setup
