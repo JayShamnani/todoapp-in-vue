@@ -17,7 +17,9 @@
 <img src="https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoAbout.jpeg?raw=true" width="100">
 
 </div>
+
 ## Project setup
+
 ```
 # setting up VueJS
 
@@ -27,6 +29,7 @@ sudo apt install npm
 
 npm i
 ```
+
 ```
 # setting up Django
 
@@ -48,11 +51,13 @@ python3 manage.py runserver 0.0.0.0:8080
 ```
 
 ### Compiles and minifies for production
+
 ```
 npm run build
 ```
 
 ### Lints and fixes files
+
 ```
 npm run lint
 ```
