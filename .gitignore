@@ -3,11 +3,7 @@ node_modules
 /dist
 
 # Django Files
-/todoapi/todoapi/settings.py
-/todoapi/*/*/*.pyc
-/todoapi/todoapp/*/*.pyc
-/todoapi/todoapp/*/__pycache__/
-/todoapi/db.sqlite3
+*.pyc
 todopyenv/
 
 # local env files
