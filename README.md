@@ -9,7 +9,13 @@
 
 # To Do App in Vue JS
 <div>
-<i src="/screenshots/TodoHome.jpeg">
+
+![Home Page](https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoHome.jpeg?raw=true)
+
+![Login Page](https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoLogin.jpeg?raw=true)
+
+![About Page](https://github.com/JayShamani/todoapp-in-vue/blob/master/screenshots/TodoAbout.jpeg?raw=true)
+
 </div>
 ## Project setup
 ```
