@@ -8,7 +8,9 @@
 </div>
 
 # To Do App in Vue JS
-
+<div>
+<i src="/screenshots/TodoHome.jpeg">
+</div>
 ## Project setup
 ```
 # setting up VueJS
