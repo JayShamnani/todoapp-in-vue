@@ -3,6 +3,7 @@ node_modules
 /dist
 
 # Django Files
+/todoapi/todoapi/settings.py
 *.pyc
 todopyenv/
 
