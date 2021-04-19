@@ -17,11 +17,11 @@ from .views import getallProfiles
 from .views import taskclass
 from .views import getProfile
 
-router = routers.DefaultRouter()
+# router = routers.DefaultRouter()
 
 urlpatterns = [
     path('home',home.as_view()),
-    path('',include(router.urls)),
+    # path('',include(router.urls)),
     path('getallprofile',getallProfiles.as_view()),
     path('getprofile/<str:pk>',getProfile.as_view()),
     path('checkprofile',checkLogin.as_view()),
